@@ -86,7 +86,6 @@ public class PostView implements Screen {
         imageButton.setBounds(723, 76, 70, 70);
         imageButton.addListener(new ButtonListener());
 
-        //       HouseView houseView = new HouseView();
 
 
         groupSlot1 = new Group();
@@ -96,14 +95,12 @@ public class PostView implements Screen {
         groupSlot1.setVisible(slotsVisible);
 
 
-        addSlotItems(createSlotButton());
-        addSlotItemsListener(createSlotButton());
+        addSlotItems();
 
 
         groupSlot = new Group();
         slot = Slot.getInstance();
         slot.setBounds(50, 20, 85, 85);
-//        slot.addListener(new SlotListener());
         groupSlot.addListener(new SlotListener());
         groupSlot.addActor(slot);
 
@@ -133,10 +130,9 @@ public class PostView implements Screen {
         groupSlot1.addActor(slots);
         groupSlot1.setVisible(slotsVisible);
 
-        addSlotItems(createSlotButton());
-        addSlotItemsListener(createSlotButton());
+        addSlotItems();
 
-        groupSlot.clear();
+               groupSlot.clear();
         groupSlot.addListener(new SlotListener());
         groupSlot.addActor(slot);
 
@@ -154,37 +150,19 @@ public class PostView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
         stage.act(delta);
+        if(ItemInSlots.getInstance().isItemClic())
+            itemCliced();
 
     }
 
-    public ItemSlot[] createSlotButton() {
-        slotButton = new ItemSlot[itemSlot.getAmount()];
-        for (int i = 0; i < itemSlot.getAmount(); i++) {
-            slotButton[i] = itemSlot;
-            if (i == 0) {
-                slotButton[i].setPosition(200, 20);
-                Gdx.app.log("My app", "x pos" + i + "=" + (slotButton[i].getX()));
-                slotButton[i].getItem(i).setPosition(200, 20);
-                Gdx.app.log("My app", "x bon" + i + "=" + (slotButton[i].getX()));
-            } else {
-                slotButton[i].setPosition(slotButton[i - 1].getX() + 85, 20);
-                Gdx.app.log("My app", "x pos" + i + "=" + (slotButton[i - 1].getX()));
-                slotButton[i].getItem(i).setPosition(slotButton[i].getX(), 20);
-                Gdx.app.log("My app", "x bon" + i + "=" + (slotButton[i].getX()));
-            }
 
 
-        }
-        return slotButton;
-    }
-
-    public void addSlotItems(ItemSlot[] slotButton) {
+    public void addSlotItems() {
+        ItemSlot[] slotButton = ItemInSlots.getInstance().createSlotButton();
 
 
         for (int i = 0; i < itemSlot.getAmount(); i++) {
-            float x = slotButton[i].getItem(i).getX();
-            float y = slotButton[i].getItem(i).getY();
-            slotButton[i].getItem(i).setBounds(x, y, 85, 85);
+
             groupSlot1.removeActor(slotButton[i].getItem(i));
             groupSlot1.addActor(slotButton[i].getItem(i));
             Gdx.app.log("My app", "add actor" + i);
@@ -192,15 +170,17 @@ public class PostView implements Screen {
         }
     }
 
-    public void addSlotItemsListener(ItemSlot[] slotButton) {
+    public void itemCliced() {
 
+        groupSlot.removeActor(slot.getItemBefore());
+        Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
 
-        for (int i = 0; i < itemSlot.getAmount(); i++) {
-
-            slotButton[i].getItem(i).addListener(new SlotItemListenerPostView(i));
-            Gdx.app.log("My app", "add listener" + i);
-
-        }
+        groupSlot.addActor(slot.getItem());
+        slotsVisible = false;
+        groupSlot1.setVisible(slotsVisible);
+        Gdx.app.log("My app", "slot actor =" + slot.getItem());
+        Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
+        ItemInSlots.getInstance().setItemClic(false);
     }
 
 
@@ -245,38 +225,6 @@ public class PostView implements Screen {
         }
     }
 
-    class SlotItemListenerPostView extends ClickListener {
-        int position;
-
-        public SlotItemListenerPostView(int position) {
-            this.position = position;
-        }
-
-        public int getPosition() {
-            return position;
-        }
-
-        @Override
-        public void clicked(InputEvent event, float x, float y) {
-
-            Gdx.app.log("My app", "Click slot" + getPosition());
-            slot.setViewActor(true);
-            slot.setItem(itemSlot.getItem(getPosition()));
-            slot.getItem().setPosition(50, 20);
-            slot.getItem().setBounds(50, 20, 85, 85);
-            groupSlot.removeActor(slot.getItemBefore());
-            Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
-
-            groupSlot.addActor(slot.getItem());
-            slotsVisible = false;
-            groupSlot1.setVisible(slotsVisible);
-            Gdx.app.log("My app", "slot actor =" + slot.getItem());
-            Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
-
-
-        }
-
-    }
 
     class PostOpenListner extends ClickListener {
         @Override
@@ -296,7 +244,7 @@ public class PostView implements Screen {
         @Override
         public void clicked(InputEvent event, float x, float y) {
             itemSlot.add(letter);
-            addSlotItems(createSlotButton());
+            addSlotItems();
             postOpenLetter.setVisible(false);
 
 
@@ -309,7 +257,7 @@ public class PostView implements Screen {
         public void clicked(InputEvent event, float x, float y) {
             groupWindowItem.setVisible(false);
             itemSlot.add(key);
-            addSlotItems(createSlotButton());
+            addSlotItems();
             Gdx.app.log("My app", "Click window item");
         }
     }

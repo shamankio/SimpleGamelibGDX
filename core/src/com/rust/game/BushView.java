@@ -9,12 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.concurrent.Delayed;
 
 
 public class BushView implements Screen {
@@ -84,13 +88,11 @@ public class BushView implements Screen {
         groupSlot1.setVisible(slotsVisible);
 
 
-        addSlotItems(createSlotButton());
-        addSlotItemsListener(createSlotButton());
+        addSlotItems();
 
         groupSlot = new Group();
         slot = Slot.getInstance();
         slot.setBounds(50, 20, 85, 85);
-
         groupSlot.addListener(new SlotListener());
         groupSlot.addActor(slot);
 
@@ -103,7 +105,7 @@ public class BushView implements Screen {
         stage.addActor(groupWindowItem);
         stage.addActor(imageButton);
 
-        Gdx.app.log("My app", "Create" + itemSlot.toString());
+        Gdx.app.log("My app", "Create bush" + itemSlot.toString());
 
     }
 
@@ -119,8 +121,7 @@ public class BushView implements Screen {
         groupSlot1.addActor(slots);
         groupSlot1.setVisible(slotsVisible);
 
-        addSlotItems(createSlotButton());
-        addSlotItemsListener(createSlotButton());
+        addSlotItems();
 
         groupSlot.clear();
         groupSlot.addListener(new SlotListener());
@@ -139,77 +140,66 @@ public class BushView implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.draw();
         stage.act(delta);
+        stage.draw();
+        if(ItemInSlots.getInstance().isItemClic())
+            itemCliced();
 
     }
 
-    public ItemSlot[] createSlotButton() {
-        slotButton = new ItemSlot[itemSlot.getAmount()];
-        for (int i = 0; i < itemSlot.getAmount(); i++) {
-            slotButton[i] = itemSlot;
-            if (i == 0) {
-                slotButton[i].setPosition(200, 20);
-                Gdx.app.log("My app", "x pos" + i + "=" + (slotButton[i].getX()));
-                slotButton[i].getItem(i).setPosition(200, 20);
-                Gdx.app.log("My app", "x bon" + i + "=" + (slotButton[i].getX()));
-            } else {
-                slotButton[i].setPosition(slotButton[i - 1].getX() + 85, 20);
-                Gdx.app.log("My app", "x pos" + i + "=" + (slotButton[i - 1].getX()));
-                slotButton[i].getItem(i).setPosition(slotButton[i].getX(), 20);
-                Gdx.app.log("My app", "x bon" + i + "=" + (slotButton[i].getX()));
-            }
 
 
-        }
-        return slotButton;
-    }
-
-    public void addSlotItems(ItemSlot[] slotButton) {
+    public void addSlotItems() {
+        ItemSlot[] slotButton = ItemInSlots.getInstance().createSlotButton();
 
 
         for (int i = 0; i < itemSlot.getAmount(); i++) {
-            float x = slotButton[i].getItem(i).getX();
-            float y = slotButton[i].getItem(i).getY();
-            slotButton[i].getItem(i).setBounds(x, y, 85, 85);
+
             groupSlot1.removeActor(slotButton[i].getItem(i));
             groupSlot1.addActor(slotButton[i].getItem(i));
             Gdx.app.log("My app", "add actor" + i);
             Gdx.app.log("My app", "Create" + itemSlot.toString());
         }
     }
+    public void itemCliced() {
 
-    public void addSlotItemsListener(ItemSlot[] slotButton) {
+        groupSlot.removeActor(slot.getItemBefore());
+        Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
 
-
-        for (int i = 0; i < itemSlot.getAmount(); i++) {
-
-            slotButton[i].getItem(i).addListener(new SlotItemListenerBushView(i));
-            Gdx.app.log("My app", "add listener" + i);
-
-        }
+        groupSlot.addActor(slot.getItem());
+        slotsVisible = false;
+        groupSlot1.setVisible(slotsVisible);
+        Gdx.app.log("My app", "slot actor =" + slot.getItem());
+        Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
+        ItemInSlots.getInstance().setItemClic(false);
     }
+
 
 
     @Override
     public void resize(int width, int height) {
+        Gdx.app.log("My app", " resize() bush");
     }
 
     @Override
     public void pause() {
+        Gdx.app.log("My app", " pause() bush");
     }
 
     @Override
     public void resume() {
+        Gdx.app.log("My app", " resume() bush");
     }
 
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+        Gdx.app.log("My app", " hide() bush");
     }
 
     @Override
     public void dispose() {
+        Gdx.app.log("My app", " dispose() bush");
         stage.dispose();
     }
 
@@ -232,38 +222,7 @@ public class BushView implements Screen {
         }
     }
 
-    class SlotItemListenerBushView extends ClickListener {
-        int position;
 
-        public SlotItemListenerBushView(int position) {
-            this.position = position;
-        }
-
-        public int getPosition() {
-            return position;
-        }
-
-        @Override
-        public void clicked(InputEvent event, float x, float y) {
-
-            Gdx.app.log("My app", "Click slot" + getPosition());
-            slot.setViewActor(true);
-            slot.setItem(itemSlot.getItem(getPosition()));
-            slot.getItem().setPosition(50, 20);
-            slot.getItem().setBounds(50, 20, 85, 85);
-            groupSlot.removeActor(slot.getItemBefore());
-            Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
-
-            groupSlot.addActor(slot.getItem());
-            slotsVisible = false;
-            groupSlot1.setVisible(slotsVisible);
-            Gdx.app.log("My app", "slot actor =" + slot.getItem());
-            Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
-
-
-        }
-
-    }
 
     class KeyGroundListener extends ClickListener {
         @Override
@@ -282,8 +241,9 @@ public class BushView implements Screen {
         public void clicked(InputEvent event, float x, float y) {
             groupWindowItem.setVisible(false);
             itemSlot.add(key);
-            addSlotItems(createSlotButton());
-            Gdx.app.log("My app", "Click window item");
+            addSlotItems();
+            groupSlot1.setVisible(true);
+            Gdx.app.log("My app bush", "Click window item");
         }
     }
 

@@ -1,5 +1,6 @@
 package com.rust.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
@@ -7,6 +8,7 @@ public class ItemSlot extends Actor {
 
     private static ItemSlot instance = new ItemSlot();
     private Array<Actor> item = new Array<Actor>();
+
 
     //   private Array slotListeners = new Array();
     private int amount = 0;
@@ -59,6 +61,8 @@ public class ItemSlot extends Actor {
     public String toString() {
         return "Slot[" + item + ":" + amount + "]";
     }
+
+
 
 
 }
