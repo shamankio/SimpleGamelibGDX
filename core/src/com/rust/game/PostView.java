@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -101,7 +102,7 @@ public class PostView implements Screen {
         groupSlot = new Group();
         slot = Slot.getInstance();
         slot.setBounds(50, 20, 85, 85);
-        groupSlot.addListener(new SlotListener());
+        groupSlot.addListener(new SlotListener(groupSlot1, slotsVisible));
         groupSlot.addActor(slot);
 
 
@@ -133,7 +134,7 @@ public class PostView implements Screen {
         addSlotItems();
 
                groupSlot.clear();
-        groupSlot.addListener(new SlotListener());
+        groupSlot.addListener(new SlotListener(groupSlot1, slotsVisible));
         groupSlot.addActor(slot);
 
         if (slot.getItemBefore() != null)
@@ -171,16 +172,17 @@ public class PostView implements Screen {
     }
 
     public void itemCliced() {
-
         groupSlot.removeActor(slot.getItemBefore());
         Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
 
         groupSlot.addActor(slot.getItem());
-        slotsVisible = false;
-        groupSlot1.setVisible(slotsVisible);
+            SlotListener.slotsVisible = false;
+        groupSlot1.addAction(Actions.moveTo(0, -100, 1f));
         Gdx.app.log("My app", "slot actor =" + slot.getItem());
         Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
         ItemInSlots.getInstance().setItemClic(false);
+
+
     }
 
 
@@ -207,23 +209,23 @@ public class PostView implements Screen {
     }
 
 
-    class SlotListener extends ClickListener {
-
-        @Override
-        public void clicked(InputEvent event, float x, float y) {
-            if (slotsVisible == false) {
-                slotsVisible = true;
-                groupSlot1.setVisible(slotsVisible);
-                Gdx.app.log("My app", "Click slotsVisible false ->" + slotsVisible);
-            } else {
-                if (slotsVisible == true) {
-                    slotsVisible = false;
-                    groupSlot1.setVisible(slotsVisible);
-                    Gdx.app.log("My app", "Click slotsVisible true ->" + slotsVisible);
-                }
-            }
-        }
-    }
+//    class SlotListener extends ClickListener {
+//
+//        @Override
+//        public void clicked(InputEvent event, float x, float y) {
+//            if (slotsVisible == false) {
+//                slotsVisible = true;
+//                groupSlot1.setVisible(slotsVisible);
+//                Gdx.app.log("My app", "Click slotsVisible false ->" + slotsVisible);
+//            } else {
+//                if (slotsVisible == true) {
+//                    slotsVisible = false;
+//                    groupSlot1.setVisible(slotsVisible);
+//                    Gdx.app.log("My app", "Click slotsVisible true ->" + slotsVisible);
+//                }
+//            }
+//        }
+//    }
 
 
     class PostOpenListner extends ClickListener {

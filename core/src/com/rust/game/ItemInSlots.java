@@ -33,14 +33,14 @@ public class ItemInSlots {
        for (int i = 0; i < itemSlot.getAmount(); i++) {
             slotButton[i] = itemSlot;
             if (i == 0) {
-                slotButton[i].setPosition(200, 20);
+                slotButton[i].setPosition(200, -100);
                 Gdx.app.log("My app", "x pos" + i + "=" + (slotButton[i].getX()));
-                slotButton[i].getItem(i).setPosition(200, 20);
+                slotButton[i].getItem(i).setPosition(200, -100);
                 Gdx.app.log("My app", "x bon" + i + "=" + (slotButton[i].getX()));
             } else {
-                slotButton[i].setPosition(slotButton[i - 1].getX() + 85, 20);
+                slotButton[i].setPosition(slotButton[i - 1].getX() + 85, -100);
                 Gdx.app.log("My app", "x pos" + i + "=" + (slotButton[i - 1].getX()));
-                slotButton[i].getItem(i).setPosition(slotButton[i].getX(), 20);
+                slotButton[i].getItem(i).setPosition(slotButton[i].getX(), -100);
                 Gdx.app.log("My app", "x bon" + i + "=" + (slotButton[i].getX()));
             }
            float x = slotButton[i].getItem(i).getX();

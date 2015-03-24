@@ -19,7 +19,7 @@ public class Slots extends Actor {
 //        slot1 = new TextureRegion(texture,112)
         sprite = new Sprite(textureRegion);
         sprite.setSize(600, 90);
-        sprite.setPosition(200, 20);
+        sprite.setPosition(200, -100);
     }
 
     public static Slots getInstance() {

@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
 public class HouseView implements Screen {
+    private MoveToAction openSlots, closeSlots;
     private BackgroundScene1 backgroundScene1;
     private BushScene1 bushScene1;
     private PostScene1 postScene1;
@@ -24,6 +26,8 @@ public class HouseView implements Screen {
     private Group groupSlot, groupSlot1;
    private ItemSlot itemSlot;
     private boolean slotsVisible;
+
+
 
 
     public HouseView() {
@@ -50,17 +54,17 @@ public class HouseView implements Screen {
         groupSlot1.setVisible(slotsVisible);
 
 
-//        key1 = new Key();
-//        letter = new Letter();
-//        itemSlot.add(key1);
-//              itemSlot.add(letter);
+        key1 = new Key();
+        letter = new Letter();
+        itemSlot.add(key1);
+              itemSlot.add(letter);
 
         addSlotItems();
 
         groupSlot = new Group();
         slot = Slot.getInstance();
         slot.setBounds(50, 20, 85, 85);
-        groupSlot.addListener(new SlotListener());
+        groupSlot.addListener(new SlotListener(groupSlot1, slotsVisible));
         groupSlot.addActor(slot);
 
 
@@ -92,7 +96,7 @@ public class HouseView implements Screen {
 
 
         groupSlot.clear();
-        groupSlot.addListener(new SlotListener());
+        groupSlot.addListener(new SlotListener(groupSlot1, slotsVisible));
         groupSlot.addActor(slot);
 
         if (slot.getItemBefore() != null)
@@ -111,6 +115,9 @@ public class HouseView implements Screen {
         stage.draw();
         if(ItemInSlots.getInstance().isItemClic())
             itemCliced();
+
+
+
     }
 
 
@@ -134,8 +141,8 @@ public class HouseView implements Screen {
             Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
 
             groupSlot.addActor(slot.getItem());
-            slotsVisible = false;
-            groupSlot1.setVisible(slotsVisible);
+         SlotListener.slotsVisible = false;
+        groupSlot1.addAction(Actions.moveTo(0,-100,1f));
             Gdx.app.log("My app", "slot actor =" + slot.getItem());
             Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
         ItemInSlots.getInstance().setItemClic(false);
@@ -188,23 +195,28 @@ public class HouseView implements Screen {
         }
     }
 
-    class SlotListener extends ClickListener {
-
-        @Override
-        public void clicked(InputEvent event, float x, float y) {
-            if (slotsVisible == false) {
-                slotsVisible = true;
-                groupSlot1.setVisible(slotsVisible);
-                Gdx.app.log("My app1", "Click slotsVisible false ->" + slotsVisible);
-            } else {
-                if (slotsVisible == true) {
-                    slotsVisible = false;
-                    groupSlot1.setVisible(slotsVisible);
-                    Gdx.app.log("My app1", "Click slotsVisible true ->" + slotsVisible);
-                }
-            }
-        }
-    }
+//    class SlotListener extends ClickListener {
+//
+//        @Override
+//        public void clicked(InputEvent event, float x, float y) {
+//            if (slotsVisible == false) {
+//                slotsVisible = true;
+//                groupSlot1.setVisible(slotsVisible);
+//                groupSlot1.addAction(Actions.moveTo(0,120,0.5f));
+//                Gdx.app.log("My app1", "Click slotsVisible false ->" + slotsVisible);
+//
+//            } else {
+//                if (slotsVisible == true) {
+//                    slotsVisible = false;
+//                    groupSlot1.addAction(Actions.moveTo(0,-100,0.5f));
+//                    if(groupSlot1.getY()==-20)
+//                    groupSlot1.setVisible(slotsVisible);
+//                    Gdx.app.log("My app1", "Click slotsVisible true ->" + slotsVisible);
+//
+//                }
+//            }
+//        }
+//    }
 
 
 }
