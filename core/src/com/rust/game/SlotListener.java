@@ -11,11 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 
 class SlotListener extends ClickListener {
-    private  Group groupSlot1;
-   public static boolean slotsVisible;
+    public static boolean slotsVisible;
+    private Group groupSlot1;
 
 
-    public SlotListener(Group groupSlot1, boolean slotVisible){
+    public SlotListener(Group groupSlot1, boolean slotVisible) {
         this.groupSlot1 = groupSlot1;
         this.slotsVisible = slotVisible;
     }
@@ -32,8 +32,8 @@ class SlotListener extends ClickListener {
         } else {
             if (slotsVisible == true) {
                 slotsVisible = false;
-                groupSlot1.addAction(Actions.moveTo(0,-100,0.5f));
-                if(groupSlot1.getY()==-20)
+                groupSlot1.addAction(Actions.moveTo(0, -100, 0.5f));
+                if (groupSlot1.getY() == -20)
                     groupSlot1.setVisible(slotsVisible);
                 Gdx.app.log("My Slot Listener", "Click slotsVisible true ->" + slotsVisible);
 

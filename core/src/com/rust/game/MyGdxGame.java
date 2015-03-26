@@ -24,8 +24,8 @@ public class MyGdxGame extends Game {
 
         bushView = new BushView();
         Gdx.app.log("My app", "Load BushView");
-       postView = new PostView();
-       Gdx.app.log("My app", "Load PostView");
+        postView = new PostView();
+        Gdx.app.log("My app", "Load PostView");
         houseView = new HouseView();
         Gdx.app.log("My app", "Load HouseView");
 
@@ -48,7 +48,6 @@ public class MyGdxGame extends Game {
     public void render() {
         super.render();
     }
-
 
 
 }

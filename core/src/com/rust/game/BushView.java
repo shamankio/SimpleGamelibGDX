@@ -3,31 +3,25 @@ package com.rust.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import java.util.concurrent.Delayed;
 
 
 public class BushView implements Screen {
-    private final Skin skin;
-    private final Texture textureNoPress;
-    private final TextureRegion textureRegionNP;
-    private final Texture texturePress;
-    private final TextureRegion textureRegionP;
+    //    private final Skin skin;
+//    private final Texture textureNoPress;
+//    private final TextureRegion textureRegionNP;
+//    private final Texture texturePress;
+//    private final TextureRegion textureRegionP;
+
+    private final ImageButton backButton;
 
     private BackgroundScene2 backgroundScene2;
 
@@ -65,21 +59,23 @@ public class BushView implements Screen {
         groupWindowItem.addActor(key);
 
 
-        textureNoPress = new Texture("strelka-2.png");
-        textureRegionNP = new TextureRegion(textureNoPress, 723, 404, 70, 70);
-
-
-        texturePress = new Texture("strelka-1.png");
-        textureRegionP = new TextureRegion(texturePress, 723, 404, 70, 70);
-        skin = new Skin();
-
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.imageUp = new TextureRegionDrawable(textureRegionNP);
-        style.imageDown = new TextureRegionDrawable(textureRegionP);
-        ImageButton imageButton = new ImageButton(style);
-        imageButton.setPosition(0, 0);
-        imageButton.setBounds(723, 76, 70, 70);
-        imageButton.addListener(new ButtonListener());
+//        textureNoPress = new Texture("strelka-2.png");
+//        textureRegionNP = new TextureRegion(textureNoPress, 723, 404, 70, 70);
+//
+//
+//        texturePress = new Texture("strelka-1.png");
+//        textureRegionP = new TextureRegion(texturePress, 723, 404, 70, 70);
+//        skin = new Skin();
+//
+//        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+//        style.imageUp = new TextureRegionDrawable(textureRegionNP);
+//        style.imageDown = new TextureRegionDrawable(textureRegionP);
+//        ImageButton backButton = new ImageButton(style);
+//        backButton.setPosition(0, 0);
+//        backButton.setBounds(723, 76, 70, 70);
+//        backButton.addListener(new ButtonListener());
+        backButton = new BackButton().getImageButton();
+        backButton.addListener(new ButtonListener());
 
 
         groupSlot1 = new Group();
@@ -104,7 +100,7 @@ public class BushView implements Screen {
         stage.addActor(groupSlot);
         stage.addActor(groundKey);
         stage.addActor(groupWindowItem);
-        stage.addActor(imageButton);
+        stage.addActor(backButton);
 
         Gdx.app.log("My app", "Create bush" + itemSlot.toString());
 
@@ -143,11 +139,10 @@ public class BushView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
-        if(ItemInSlots.getInstance().isItemClic())
+        if (ItemInSlots.getInstance().isItemClic())
             itemCliced();
 
     }
-
 
 
     public void addSlotItems() {
@@ -162,6 +157,7 @@ public class BushView implements Screen {
             Gdx.app.log("My app", "Create" + itemSlot.toString());
         }
     }
+
     public void itemCliced() {
 
         groupSlot.removeActor(slot.getItemBefore());
@@ -174,7 +170,6 @@ public class BushView implements Screen {
         Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
         ItemInSlots.getInstance().setItemClic(false);
     }
-
 
 
     @Override
@@ -224,7 +219,6 @@ public class BushView implements Screen {
 //    }
 
 
-
     class KeyGroundListener extends ClickListener {
         @Override
         public void clicked(InputEvent event, float x, float y) {
@@ -244,7 +238,7 @@ public class BushView implements Screen {
             itemSlot.add(key);
             addSlotItems();
             groupSlot1.setVisible(true);
-             Gdx.app.log("My app bush", "Click window item");
+            Gdx.app.log("My app bush", "Click window item");
         }
     }
 

@@ -22,6 +22,7 @@ public class Slot extends Actor {
         sprite = new Sprite(textureRegion);
         sprite.setSize(90, 90);
         sprite.setPosition(50, 20);
+        setBounds(50, 20, 85, 85);
 
     }
 

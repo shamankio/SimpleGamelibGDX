@@ -7,27 +7,22 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
 public class HouseView implements Screen {
-    private MoveToAction openSlots, closeSlots;
     private BackgroundScene1 backgroundScene1;
     private BushScene1 bushScene1;
     private PostScene1 postScene1;
     private Slot slot;
     private Slots slots;
- //   private ItemSlot[] slotButton;
     private Key key1;
     private Letter letter;
     private Stage stage;
     private Group groupSlot, groupSlot1;
-   private ItemSlot itemSlot;
+    private ItemSlot itemSlot;
     private boolean slotsVisible;
-
-
 
 
     public HouseView() {
@@ -35,7 +30,7 @@ public class HouseView implements Screen {
 
         backgroundScene1 = new BackgroundScene1();
 
-      itemSlot = ItemSlot.getInstance();
+        itemSlot = ItemSlot.getInstance();
 
 
         bushScene1 = new BushScene1();
@@ -57,7 +52,7 @@ public class HouseView implements Screen {
         key1 = new Key();
         letter = new Letter();
         itemSlot.add(key1);
-              itemSlot.add(letter);
+        itemSlot.add(letter);
 
         addSlotItems();
 
@@ -113,13 +108,11 @@ public class HouseView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
-        if(ItemInSlots.getInstance().isItemClic())
+        if (ItemInSlots.getInstance().isItemClic())
             itemCliced();
 
 
-
     }
-
 
 
     public void addSlotItems() {
@@ -137,18 +130,18 @@ public class HouseView implements Screen {
 
 
     public void itemCliced() {
-            groupSlot.removeActor(slot.getItemBefore());
-            Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
+        groupSlot.removeActor(slot.getItemBefore());
+        Gdx.app.log("My app", "remove actor =" + slot.getItemBefore());
 
-            groupSlot.addActor(slot.getItem());
-         SlotListener.slotsVisible = false;
-        groupSlot1.addAction(Actions.moveTo(0,-100,1f));
-            Gdx.app.log("My app", "slot actor =" + slot.getItem());
-            Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
+        groupSlot.addActor(slot.getItem());
+        SlotListener.slotsVisible = false;
+        groupSlot1.addAction(Actions.moveTo(0, -100, 1f));
+        Gdx.app.log("My app", "slot actor =" + slot.getItem());
+        Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
         ItemInSlots.getInstance().setItemClic(false);
 
 
-        }
+    }
 
 
     @Override
@@ -194,29 +187,6 @@ public class HouseView implements Screen {
             Gdx.app.log("My app", "Click post");
         }
     }
-
-//    class SlotListener extends ClickListener {
-//
-//        @Override
-//        public void clicked(InputEvent event, float x, float y) {
-//            if (slotsVisible == false) {
-//                slotsVisible = true;
-//                groupSlot1.setVisible(slotsVisible);
-//                groupSlot1.addAction(Actions.moveTo(0,120,0.5f));
-//                Gdx.app.log("My app1", "Click slotsVisible false ->" + slotsVisible);
-//
-//            } else {
-//                if (slotsVisible == true) {
-//                    slotsVisible = false;
-//                    groupSlot1.addAction(Actions.moveTo(0,-100,0.5f));
-//                    if(groupSlot1.getY()==-20)
-//                    groupSlot1.setVisible(slotsVisible);
-//                    Gdx.app.log("My app1", "Click slotsVisible true ->" + slotsVisible);
-//
-//                }
-//            }
-//        }
-//    }
 
 
 }
