@@ -11,13 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class BackButton {
 
 
-    public static boolean presButton = false;
+    
 
     private final ImageButton imageButton;
     private Texture texturePress, textureNoPress;
     private TextureRegion textureRegionP, textureRegionNP;
-    private Sprite sprite, sprite1;
-    private Actor item, itemBefore;
+
 
     public BackButton() {
         textureNoPress = new Texture("strelka-2.png");
