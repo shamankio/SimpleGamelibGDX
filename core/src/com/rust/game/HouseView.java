@@ -65,8 +65,6 @@ public class HouseView implements Screen {
         groupSlot.addListener(new SlotListener(groupSlot1, slotsVisible));
         groupSlot.addActor(slot);
 
-
-
         stage = new Stage(new StretchViewport(MyGdxGame.SCREEN_WIDTH, MyGdxGame.SCREEN_HIGHT));
         stage.getCamera().position.set(MyGdxGame.SCREEN_WIDTH / 2, MyGdxGame.SCREEN_HIGHT / 2 , 0);
         stage.addActor(backgroundScene1);
@@ -76,8 +74,6 @@ public class HouseView implements Screen {
         stage.addActor(groupSlot);
 
         Gdx.app.log("My app", "Create car" + itemSlot.toString());
-
-
     }
 
 
