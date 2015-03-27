@@ -3,12 +3,14 @@ package com.rust.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 
 public class HouseView implements Screen {
@@ -27,6 +29,7 @@ public class HouseView implements Screen {
 
     public HouseView() {
         Gdx.app.log("My app", "car builder start");
+
 
         backgroundScene1 = new BackgroundScene1();
 
@@ -63,7 +66,9 @@ public class HouseView implements Screen {
         groupSlot.addActor(slot);
 
 
-        stage = new Stage(new ScreenViewport());
+
+        stage = new Stage(new StretchViewport(MyGdxGame.SCREEN_WIDTH, MyGdxGame.SCREEN_HIGHT));
+        stage.getCamera().position.set(MyGdxGame.SCREEN_WIDTH / 2, MyGdxGame.SCREEN_HIGHT / 2 , 0);
         stage.addActor(backgroundScene1);
         stage.addActor(bushScene1);
         stage.addActor(postScene1);
@@ -163,6 +168,7 @@ public class HouseView implements Screen {
     public void hide() {
         Gdx.app.log("My app", "car hide()");
         Gdx.input.setInputProcessor(null);
+
     }
 
     @Override

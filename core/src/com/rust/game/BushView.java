@@ -3,6 +3,7 @@ package com.rust.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 
 public class BushView implements Screen {
@@ -40,6 +42,8 @@ public class BushView implements Screen {
 
     public BushView() {
         Gdx.app.log("My app", "Bush builder start");
+        loadImage();
+
         backgroundScene2 = new BackgroundScene2();
         itemSlot = ItemSlot.getInstance();
 
@@ -94,7 +98,8 @@ public class BushView implements Screen {
         groupSlot.addActor(slot);
 
 
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new StretchViewport(MyGdxGame.SCREEN_WIDTH, MyGdxGame.SCREEN_HIGHT));
+        stage.getCamera().position.set(MyGdxGame.SCREEN_WIDTH / 2, MyGdxGame.SCREEN_HIGHT / 2 , 0);
         stage.addActor(backgroundScene2);
         stage.addActor(groupSlot1);
         stage.addActor(groupSlot);
@@ -170,7 +175,12 @@ public class BushView implements Screen {
         Gdx.app.log("My app", "slot actor before=" + slot.getItemBefore());
         ItemInSlots.getInstance().setItemClic(false);
     }
+    private void loadImage(){
+        MyGdxGame.getInstance().getAssetsManager().load("6.jpg",Texture.class);
+        MyGdxGame.getInstance().getAssetsManager().load("df.png",Texture.class);
 
+        MyGdxGame.getInstance().getAssetsManager().finishLoading();
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -191,11 +201,13 @@ public class BushView implements Screen {
     public void hide() {
         Gdx.input.setInputProcessor(null);
         Gdx.app.log("My app", " hide() bush");
+
     }
 
     @Override
     public void dispose() {
         Gdx.app.log("My app", " dispose() bush");
+
         stage.dispose();
     }
 

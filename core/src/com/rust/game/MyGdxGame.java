@@ -2,12 +2,16 @@ package com.rust.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 
 public class MyGdxGame extends Game {
+    public static final float SCREEN_WIDTH = 800;
+    public static final float SCREEN_HIGHT = 480;
     private static MyGdxGame instance = new MyGdxGame();
     private HouseView houseView;
     private BushView bushView;
     private PostView postView;
+    private AssetManager manager;
 
 
     private MyGdxGame() {
@@ -20,6 +24,7 @@ public class MyGdxGame extends Game {
 
     @Override
     public void create() {
+        manager = new AssetManager();
 
 
         bushView = new BushView();
@@ -33,20 +38,28 @@ public class MyGdxGame extends Game {
     }
 
     public void showBush() {
+
         this.setScreen(bushView);
     }
 
     public void showCar() {
+
         this.setScreen(houseView);
+
     }
 
     public void showPost() {
+
         this.setScreen(postView);
     }
 
     @Override
     public void render() {
         super.render();
+    }
+
+    public AssetManager getAssetsManager(){
+        return manager;
     }
 
 

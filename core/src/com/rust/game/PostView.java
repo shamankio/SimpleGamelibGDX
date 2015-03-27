@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 
 public class PostView implements Screen {
@@ -104,7 +105,8 @@ public class PostView implements Screen {
         groupSlot.addActor(slot);
 
 
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new StretchViewport(MyGdxGame.SCREEN_WIDTH, MyGdxGame.SCREEN_HIGHT));
+        stage.getCamera().position.set(MyGdxGame.SCREEN_WIDTH / 2, MyGdxGame.SCREEN_HIGHT / 2 , 0);
         stage.addActor(backgroundScene3);
         stage.addActor(groupSlot1);
         stage.addActor(groupSlot);
@@ -198,6 +200,8 @@ public class PostView implements Screen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+
+
     }
 
     @Override

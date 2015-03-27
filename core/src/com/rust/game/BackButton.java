@@ -12,7 +12,7 @@ public class BackButton {
 
 
     public static boolean presButton = false;
-    private final Skin skin;
+
     private final ImageButton imageButton;
     private Texture texturePress, textureNoPress;
     private TextureRegion textureRegionP, textureRegionNP;
@@ -26,7 +26,7 @@ public class BackButton {
 
         texturePress = new Texture("strelka-1.png");
         textureRegionP = new TextureRegion(texturePress, 723, 404, 70, 70);
-        skin = new Skin();
+
 
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
         style.imageUp = new TextureRegionDrawable(textureRegionNP);
@@ -40,5 +40,5 @@ public class BackButton {
         return imageButton;
     }
 
-    ;
+
 }

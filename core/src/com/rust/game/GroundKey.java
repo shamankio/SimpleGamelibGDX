@@ -13,7 +13,10 @@ public class GroundKey extends Actor {
     private TextureRegion region;
 
     public GroundKey() {
-        texture = new Texture("df.png");
+        if(MyGdxGame.getInstance().getAssetsManager().isLoaded("df.png",Texture.class))
+            System.out.println("df loaded");
+        texture = MyGdxGame.getInstance().getAssetsManager().get("df.png",Texture.class);
+//        texture = new Texture("df.png");
         TextureRegion region = new TextureRegion(texture, 207, 207, 80, 58);
         sprite = new Sprite(region);
         sprite.setSize(80, 58);
