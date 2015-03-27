@@ -32,7 +32,7 @@ public class BackButton {
         style.imageUp = new TextureRegionDrawable(textureRegionNP);
         style.imageDown = new TextureRegionDrawable(textureRegionP);
         imageButton = new ImageButton(style);
-        imageButton.setPosition(0, 0);
+
         imageButton.setBounds(723, 76, 70, 70);
     }
 
