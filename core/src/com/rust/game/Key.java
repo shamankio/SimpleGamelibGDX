@@ -14,7 +14,7 @@ public class Key extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(texture, getX(), getY(), 85, 85);
+        batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }
 
 }

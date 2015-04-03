@@ -25,6 +25,7 @@ public class ItemSlot extends Actor {
     }
 
     public boolean add(Actor item) {
+       item.setSize(85,85);
         this.item.add(item);
         this.amount += 1;
 

@@ -55,7 +55,7 @@ public class BushView implements Screen {
         key = new Key();
         groupWindowItem = new Group();
         key.setPosition(350, 300);
-        key.setSize(300, 200);
+        key.setSize(200, 100);
         windowItem.setBounds(193, 154, 425, 241);
         groupWindowItem.setVisible(false);
         groupWindowItem.addListener(new WindowItemListener());
